@@ -19,6 +19,10 @@ class Index(EmailMixin, TemplateView):
         data['title'] = self.request.POST.get('title')
         data['message'] = self.request.POST.get('message')
 
+
+
+
+
         context['form'] = form
         context['data'] = data
         return context
