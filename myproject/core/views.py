@@ -3,6 +3,8 @@ from django.shortcuts import HttpResponseRedirect
 from django.views.generic import TemplateView
 from .forms import EmailForm
 from .mixins import EmailMixin
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 class Index(EmailMixin, TemplateView):
@@ -21,6 +23,23 @@ class Index(EmailMixin, TemplateView):
         context['data'] = data
         return context
 
+#     def post(self, request, *args, **kwargs):
+#         self.send_mail(
+#     'Subject here',
+#     'Here is the message.',
+#     'sunny@zestgeek.com',
+#     ['sunny@zestgeek.com'],
+#     fail_silently=False,
+# )
+#         return HttpResponseRedirect(reverse_lazy('core:index'))
+
+
     def post(self, request, *args, **kwargs):
-        self.send_mail()
+        subject = "test email"
+        message = "hello sunny"
+        reply_to_list = ['sunny@zestgeek.com', 'sunny@zestgeek.com']
+
+        email = EmailMessage(subject, message, 'sunny@zestgeek.com', reply_to_list)
+        email.send(fail_silently=True)
         return HttpResponseRedirect(reverse_lazy('core:index'))
+
